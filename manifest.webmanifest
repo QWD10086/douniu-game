@@ -1,0 +1,20 @@
+{
+  "name": "斗牛 · 单机版",
+  "short_name": "斗牛",
+  "description": "斗牛（牛牛）单机卡牌游戏，玩家 vs 3 电脑，可离线运行",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06241a",
+  "theme_color": "#0b6b3a",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
