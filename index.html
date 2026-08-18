@@ -68,9 +68,13 @@ header .brand small{font-size:11px; color:var(--muted); letter-spacing:0; font-w
 .card.back::after{content:"牛"; font-size:16px; color:rgba(255,255,255,.85); font-weight:800;}
 .card.win{outline:3px solid var(--gold); box-shadow:0 0 12px var(--gold);}
 .card.lose{opacity:.55;}
-#seat-ai1 .card, #seat-ai2 .card, #seat-ai3 .card{width:27px; height:38px;}
-#seat-ai1 .card .r, #seat-ai2 .card .r, #seat-ai3 .card .r{font-size:11px;}
-#seat-ai1 .card .s, #seat-ai2 .card .s, #seat-ai3 .card .s{font-size:10px;}
+.seat.ai .card{width:25px; height:35px;}
+.seat.ai .card .r{font-size:10px;}
+.seat.ai .card .s{font-size:9px;}
+.seat.ai{background:rgba(0,0,0,.18); border:1px solid var(--line); border-radius:12px; padding:6px 8px; display:flex; flex-direction:column; align-items:center; gap:4px;}
+.ai-top{display:grid; grid-template-columns:repeat(3,1fr); gap:6px;}
+.ai-bottom{display:grid; grid-template-columns:repeat(2,1fr); gap:6px; width:72%; margin:0 auto;}
+.seat.you{background:rgba(245,197,66,.08); border:1px solid var(--gold);}
 
 .center{display:flex; flex-direction:column; align-items:center; gap:6px; padding:4px 0;}
 .pot{font-size:13px; color:var(--muted);}
@@ -117,16 +121,18 @@ details.rules code{background:var(--panel2); padding:1px 6px; border-radius:5px;
 </head>
 <body>
 <header>
-  <div class="brand">斗牛 <small>单机版 · 你 vs 3 电脑</small></div>
+  <div class="brand">斗牛 <small>单机版 · 你 vs 5 电脑</small></div>
   <div class="credits">积分 <b id="myCredits">1000</b></div>
 </header>
 
 <div class="wrap">
   <div class="table">
     <div class="grid">
-      <div class="seat" id="seat-ai2"></div>
-      <div class="seat" id="seat-ai1"></div>
-      <div class="seat" id="seat-ai3"></div>
+      <div class="ai-top">
+        <div class="seat ai" id="seat-ai1"></div>
+        <div class="seat ai" id="seat-ai2"></div>
+        <div class="seat ai" id="seat-ai3"></div>
+      </div>
       <div class="center">
         <div class="phase-tag" id="phaseTag">准备开始</div>
         <div class="pot">本局总注 <b id="potAmount">0</b></div>
@@ -135,7 +141,11 @@ details.rules code{background:var(--panel2); padding:1px 6px; border-radius:5px;
           倍数：牛7-9 ×2，牛牛 ×3，五花牛/炸弹 ×4，五小牛 ×5（再乘庄家抢庄倍数）
         </div>
       </div>
-      <div class="seat" id="seat-you"></div>
+      <div class="ai-bottom">
+        <div class="seat ai" id="seat-ai4"></div>
+        <div class="seat ai" id="seat-ai5"></div>
+      </div>
+      <div class="seat you" id="seat-you"></div>
     </div>
   </div>
 
@@ -234,6 +244,8 @@ function initGame(){
       newPlayer("ai1","电脑·阿牛",false),
       newPlayer("ai2","电脑·铁柱",false),
       newPlayer("ai3","电脑·老K",false),
+      newPlayer("ai4","电脑·大圣",false),
+      newPlayer("ai5","电脑·小慧",false),
     ],
     phase:"idle",        // idle | grab | bet | reveal | result
     deck:[], banker:null, pot:0, round:0,
@@ -342,7 +354,7 @@ function render(){
   document.getElementById("phaseTag").textContent = phaseNames[G.phase]||"";
   document.getElementById("potAmount").textContent = G.pot;
 
-  const seatMap={ai1:"seat-ai1",ai2:"seat-ai2",ai3:"seat-ai3",you:"seat-you"};
+  const seatMap={you:"seat-you",ai1:"seat-ai1",ai2:"seat-ai2",ai3:"seat-ai3",ai4:"seat-ai4",ai5:"seat-ai5"};
   for(const p of G.players){
     const el=document.getElementById(seatMap[p.id]);
     const isBanker = p.banker;
@@ -549,6 +561,8 @@ G = {
     newPlayer("ai1","电脑·阿牛",false),
     newPlayer("ai2","电脑·铁柱",false),
     newPlayer("ai3","电脑·老K",false),
+    newPlayer("ai4","电脑·大圣",false),
+    newPlayer("ai5","电脑·小慧",false),
   ],
   phase:"idle", deck:[], banker:null, pot:0, round:0,
 };
